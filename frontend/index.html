@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Parking System</h1>
+        <nav>
+            <a href="#" id="login-link">Login</a>
+            <a href="#" id="register-link">Register</a>
+        </nav>
+    </header>
+    <main>
+        <section id="parking-list">
+            <h2>Available Parking Spots</h2>
+            <ul id="parking-ul"></ul>
+        </section>
+
+        <!-- Login Form -->
+<section id="login-form" class="modal hidden">
+    <div class="modal-content">
+        <h2>Login</h2>
+        <form id="login-form" method="POST">
+    <label for="login-email">Email:</label>
+    <input type="email" id="login-email" name="email" required>
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" name="password" required>
+    <button type="submit">Login</button>
+    <button type="button" class="close-modal">Close</button>
+</form>
+    </div>
+</section>
+
+<!-- Register Form -->
+<section id="register-form" class="modal hidden">
+    <div class="modal-content">
+        <h2>Register</h2>
+        <form action="../backend/php/register.php" method="POST">
+            <label for="register-firstname">First Name:</label>
+            <input type="text" id="register-firstname" name="firstname" required>
+            <label for="register-lastname">Last Name:</label>
+            <input type="text" id="register-lastname" name="lastname" required>
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" name="email" required>
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" name="password" required>
+            <label for="register-phone">Phone:</label>
+            <input type="text" id="register-phone" name="phone">
+            <label for="register-nip">NIP:</label>
+            <input type="text" id="register-nip" name="nip">
+            <button type="submit">Register</button>
+            <button type="button" class="close-modal">Close</button>
+        </form>
+    </div>
+</section>
+
+<section id="vehicle-management" class="hidden">
+    <h2>Your Vehicles</h2>
+    <ul id="vehicle-list"></ul>
+    
+    <h3>Add New Vehicle</h3>
+    <form id="add-vehicle-form">
+        <input type="text" id="nr_rejestracyjny" placeholder="Registration Number" required>
+        <input type="text" id="marka" placeholder="Brand" required>
+        <input type="text" id="model" placeholder="Model" required>
+        <input type="text" id="typ" placeholder="Type" required>
+        <button type="submit">Add Vehicle</button>
+    </form>
+</section>
+
+
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
