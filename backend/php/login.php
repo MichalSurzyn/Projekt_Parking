@@ -29,16 +29,24 @@ if ($conn->connect_error) {
     exit();
 }
 
-$stmt = $conn->prepare("SELECT ID_Uzytkownika, Haslo FROM Uzytkownik WHERE Email = ?");
+// Pobierz ID użytkownika, hasło, imię i nazwisko
+$stmt = $conn->prepare("SELECT ID_Uzytkownika, Haslo, Imie, Nazwisko FROM Uzytkownik WHERE Email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$stmt->bind_result($userId, $hashedPassword);
+$stmt->bind_result($userId, $hashedPassword, $firstName, $lastName);
 $stmt->fetch();
 
 if ($userId && password_verify($password, $hashedPassword)) {
     session_start();
     $_SESSION['userId'] = $userId;
-    echo json_encode(["success" => true, "message" => "Login successful"]);
+    echo json_encode([
+        "success" => true,
+        "message" => "Login successful",
+        "firstName" => $firstName,
+        "lastName" => $lastName
+    ]);
+    $_SESSION['firstName'] = $firstName;
+    $_SESSION['lastName'] = $lastName;
 } else {
     echo json_encode(["success" => false, "message" => "Invalid credentials."]);
 }

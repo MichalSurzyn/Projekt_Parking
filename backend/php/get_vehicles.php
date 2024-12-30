@@ -1,5 +1,9 @@
 <?php
 session_start();
+header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Credentials: true");
+
+echo json_encode($_SESSION);
 
 // Sprawdzenie, czy użytkownik jest zalogowany
 if (!isset($_SESSION['user_id'])) {

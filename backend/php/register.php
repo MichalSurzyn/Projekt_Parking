@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/plain'); // Odpowiedź w formacie tekstowym
+
 // Połączenie z bazą danych
 $servername = "localhost";
 $username = "root";
@@ -15,7 +17,7 @@ if ($conn->connect_error) {
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $email = $_POST['email'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hashowanie hasła
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $phone = $_POST['phone'];
 $nip = $_POST['nip'];
 
