@@ -14,16 +14,20 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('Response data:', data) // Debugowanie odpowiedzi
         if (data.success) {
-          alert(
+          /*alert(
             `Login successful! Logged in as: ${data.firstName} ${data.lastName}`
           )
-
+          */
           // Wyświetlenie imienia i nazwiska na stronie
-          const userInfo = document.createElement('p')
-          userInfo.id = 'user-info'
-          userInfo.textContent = `Logged in as: ${data.firstName} ${data.lastName}`
-          document.body.prepend(userInfo)
+          //const userInfo = document.createElement('p')
+          //userInfo.id = 'user-info'
+          //userInfo.textContent = `Zalogowano jako: ${data.firstName} ${data.lastName}`
+          //document.body.prepend(userInfo)
+
+          document.getElementById('login-link').style.display = 'none'
+          document.getElementById('register-link').style.display = 'none'
 
           document.getElementById('login-link').style.display = 'none'
           document.getElementById('register-link').style.display = 'none'
@@ -35,10 +39,8 @@ document
           logoutButton.addEventListener('click', logout)
           document.querySelector('nav').appendChild(logoutButton)
 
-          document
-            .getElementById('vehicle-management')
-            .classList.remove('hidden')
-          fetchUserVehicles()
+          // Odświeżenie strony
+          window.location.reload()
         } else {
           alert(data.message || 'Invalid login credentials.')
         }
@@ -68,7 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((response) => response.text())
       .then((data) => {
         messageBox.textContent = data
-        messageBox.style.color = data.includes('successful') ? 'green' : 'red'
+        if (data.includes('successful')) {
+          messageBox.style.color = 'green'
+          form.reset() // Wyczyść pola formularza po pomyślnej rejestracji
+        } else {
+          messageBox.style.color = 'red'
+        }
       })
       .catch((error) => {
         messageBox.textContent = 'An error occurred.'
@@ -89,6 +96,7 @@ function logout() {
 }
 
 // Sprawdzenie, czy użytkownik jest zalogowany
+
 fetch('../backend/php/check_login.php')
   .then((response) => response.json())
   .then((data) => {
@@ -104,15 +112,8 @@ fetch('../backend/php/check_login.php')
       document.querySelector('nav').appendChild(logoutButton)
 
       // Wyświetl imię i nazwisko użytkownika na stronie
-      const userInfo = document.createElement('p')
-      userInfo.id = 'user-info'
+      const userInfo = document.getElementById('kto_to')
       userInfo.textContent = `Zalogowano jako: ${data.firstName} ${data.lastName}`
-      document.body.appendChild(userInfo)
-
-      document.getElementById('vehicle-management').classList.remove('hidden')
-      fetchUserVehicles()
-    } else {
-      document.getElementById('vehicle-management').classList.add('hidden')
     }
   })
   .catch((error) => console.error('Error checking login status:', error))

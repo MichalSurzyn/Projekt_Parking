@@ -12,6 +12,7 @@
       <nav>
         <a href="#" id="login-link">Login</a>
         <a href="#" id="register-link">Register</a>
+        <h1 id="kto_to"></h1>
       </nav>
     </header>
     <main>
@@ -80,24 +81,35 @@
         </div>
       </section>
 
-      <section id="vehicle-management" class="hidden">
-        <h2>Your Vehicles</h2>
-        <ul id="vehicle-list"></ul>
+      <!-- Sekcja wyświetlania pojazdów -->
+      <div id="vehicleListContainer" style="display: none">
+        <h2>Twoje Pojazdy</h2>
+        <ul id="vehicleList"></ul>
+      </div>
 
-        <h3>Add New Vehicle</h3>
-        <form id="add-vehicle-form">
+      <div id="vehicleFormContainer" style="display: none">
+        <h2>Dodaj pojazd</h2>
+        <form id="addVehicleForm">
+          <label for="nrRejestracyjny">Numer Rejestracyjny:</label>
           <input
             type="text"
-            id="nr_rejestracyjny"
-            placeholder="Registration Number"
+            id="nrRejestracyjny"
+            name="nrRejestracyjny"
             required
-          />
-          <input type="text" id="marka" placeholder="Brand" required />
-          <input type="text" id="model" placeholder="Model" required />
-          <input type="text" id="typ" placeholder="Type" required />
-          <button type="submit">Add Vehicle</button>
+          /><br />
+
+          <label for="marka">Marka:</label>
+          <input type="text" id="marka" name="marka" required /><br />
+
+          <label for="model">Model:</label>
+          <input type="text" id="model" name="model" required /><br />
+
+          <label for="typ">Typ:</label>
+          <input type="text" id="typ" name="typ" required /><br />
+
+          <button type="submit">Dodaj pojazd</button>
         </form>
-      </section>
+      </div>
     </main>
 
     <script src="js/auth.js"></script>

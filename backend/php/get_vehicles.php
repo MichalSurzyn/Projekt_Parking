@@ -1,28 +1,28 @@
 <?php
+header('Content-Type: application/json');
 session_start();
-header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Credentials: true");
 
-echo json_encode($_SESSION);
-
-// Sprawdzenie, czy użytkownik jest zalogowany
-if (!isset($_SESSION['user_id'])) {
-    http_response_code(401);
-    echo json_encode(["error" => "Unauthorized"]);
-    exit;
+if (!isset($_SESSION['userId'])) {
+    echo json_encode(["success" => false, "message" => "Użytkownik nie jest zalogowany."]);
+    exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$userId = $_SESSION['userId'];
 
-// Połączenie z bazą danych
-$conn = new mysqli("localhost", "root", "", "ParkingSystem");
+$servername = "localhost";
+$username = "root";
+$dbpassword = "";
+$dbname = "ParkingSystem";
+
+$conn = new mysqli($servername, $username, $dbpassword, $dbname);
+
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo json_encode(["success" => false, "message" => "Błąd połączenia z bazą danych."]);
+    exit();
 }
 
-// Pobieranie listy pojazdów użytkownika
-$stmt = $conn->prepare("SELECT * FROM Pojazd WHERE ID_Uzytkownika = ?");
-$stmt->bind_param("i", $user_id);
+$stmt = $conn->prepare("SELECT ID_Pojazdu, Nr_Rejestracyjny, Marka, Model, Typ FROM Pojazd WHERE ID_Uzytkownika = ?");
+$stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -31,7 +31,7 @@ while ($row = $result->fetch_assoc()) {
     $vehicles[] = $row;
 }
 
-echo json_encode($vehicles);
+echo json_encode(["success" => true, "vehicles" => $vehicles]);
 
 $stmt->close();
 $conn->close();

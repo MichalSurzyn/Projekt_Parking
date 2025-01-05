@@ -39,14 +39,15 @@ $stmt->fetch();
 if ($userId && password_verify($password, $hashedPassword)) {
     session_start();
     $_SESSION['userId'] = $userId;
+    $_SESSION['firstName'] = $firstName;
+    $_SESSION['lastName'] = $lastName;
+
     echo json_encode([
         "success" => true,
         "message" => "Login successful",
-        "firstName" => $firstName,
-        "lastName" => $lastName
+        "firstName" => $firstName ?? "Unknown",
+        "lastName" => $lastName ?? "Unknown"
     ]);
-    $_SESSION['firstName'] = $firstName;
-    $_SESSION['lastName'] = $lastName;
 } else {
     echo json_encode(["success" => false, "message" => "Invalid credentials."]);
 }
