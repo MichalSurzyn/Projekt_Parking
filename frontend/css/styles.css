@@ -85,6 +85,13 @@ main {
 .modal-content form button.close-modal {
   background: #888;
 }
+
+.reservation-parking-pricing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /*psuje wyświetlanie forma logowania
 .modal {
   display: none;
