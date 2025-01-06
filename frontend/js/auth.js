@@ -118,20 +118,42 @@ fetch('../backend/php/check_login.php')
   })
   .catch((error) => console.error('Error checking login status:', error))
 
+document
+  .getElementById('reservation-modal')
+  .addEventListener('open', loadUserVehicles)
+
 // Ładowanie pojazdów użytkownika do formularza rezerwacji
 function loadUserVehicles() {
-  fetch('../backend/php/get_user_vehicles.php')
+  fetch('../backend/php/get_vehicles.php')
     .then((response) => response.json())
-    .then((vehicles) => {
-      const vehicleSelect = document.getElementById('vehicle-id')
-      vehicleSelect.innerHTML = ''
+    .then((data) => {
+      console.log('Fetched vehicles:', data) // Loguj całą odpowiedź, aby upewnić się, że jest poprawna
 
-      vehicles.forEach((vehicle) => {
-        const option = document.createElement('option')
-        option.value = vehicle.ID_Pojazdu
-        option.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.NrRejestracyjny})`
-        vehicleSelect.appendChild(option)
-      })
+      // Sprawdź, czy odpowiedź zawiera właściwość `vehicles`
+      if (data.success && Array.isArray(data.vehicles)) {
+        const vehicles = data.vehicles
+        const vehicleList = document.getElementById('vehicle-list')
+        vehicleList.innerHTML = ''
+
+        vehicles.forEach((vehicle) => {
+          const vehicleContainer = document.createElement('div')
+
+          const radio = document.createElement('input')
+          radio.type = 'radio'
+          radio.name = 'vehicle_id'
+          radio.value = vehicle.ID_Pojazdu
+          radio.required = true
+
+          const label = document.createElement('label')
+          label.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.Nr_Rejestracyjny})`
+          label.prepend(radio)
+
+          vehicleContainer.appendChild(label)
+          vehicleList.appendChild(vehicleContainer)
+        })
+      } else {
+        console.error('Invalid response structure:', data)
+      }
     })
     .catch((error) => console.error('Error fetching user vehicles:', error))
 }

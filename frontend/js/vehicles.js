@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch((error) => console.error('Błąd podczas dodawania pojazdu:', error))
   })
 
-  // Funkcja ładowania pojazdów użytkownika
+  // Funkcja ładowania pojazdów użytkownikaasdsdf
   function loadVehicles() {
     fetch('../backend/php/get_vehicles.php')
       .then((response) => response.json())

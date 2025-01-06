@@ -92,10 +92,12 @@
               id="reservation-parking-id"
               name="parking_id"
             />
-            <label for="vehicle-id">Vehicle:</label>
-            <select id="vehicle-id" name="vehicle_id" required>
-              <!-- Opcje będą dynamicznie załadowane -->
-            </select>
+
+            <label>Vehicle:</label>
+            <div id="vehicle-list">
+              <!-- Przyciski radiowe będą dynamicznie generowane -->
+            </div>
+
             <label for="reservation-date-start">Start Date:</label>
             <input
               type="datetime-local"

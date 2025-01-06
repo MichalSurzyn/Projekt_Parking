@@ -85,7 +85,7 @@ main {
 .modal-content form button.close-modal {
   background: #888;
 }
-
+/*psuje wyświetlanie forma logowania
 .modal {
   display: none;
   position: fixed;
@@ -110,3 +110,4 @@ main {
 .close-modal {
   margin-top: 1em;
 }
+*/
