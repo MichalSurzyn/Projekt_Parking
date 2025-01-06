@@ -81,6 +81,41 @@
         </div>
       </section>
 
+      <!-- Reservation Modal -->
+      <section id="reservation-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Make a Reservation</h2>
+          <p id="reservation-parking-name"></p>
+          <form id="reservation-form" method="POST">
+            <input
+              type="hidden"
+              id="reservation-parking-id"
+              name="parking_id"
+            />
+            <label for="vehicle-id">Vehicle:</label>
+            <select id="vehicle-id" name="vehicle_id" required>
+              <!-- Opcje będą dynamicznie załadowane -->
+            </select>
+            <label for="reservation-date-start">Start Date:</label>
+            <input
+              type="datetime-local"
+              id="reservation-date-start"
+              name="start_date"
+              required
+            />
+            <label for="reservation-date-end">End Date:</label>
+            <input
+              type="datetime-local"
+              id="reservation-date-end"
+              name="end_date"
+              required
+            />
+            <button type="submit">Reserve</button>
+            <button type="button" class="close-modal">Close</button>
+          </form>
+        </div>
+      </section>
+
       <!-- Sekcja wyświetlania pojazdów -->
       <div id="vehicleListContainer" style="display: none">
         <h2>Twoje Pojazdy</h2>

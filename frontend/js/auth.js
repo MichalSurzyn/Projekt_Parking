@@ -117,3 +117,52 @@ fetch('../backend/php/check_login.php')
     }
   })
   .catch((error) => console.error('Error checking login status:', error))
+
+// Ładowanie pojazdów użytkownika do formularza rezerwacji
+function loadUserVehicles() {
+  fetch('../backend/php/get_user_vehicles.php')
+    .then((response) => response.json())
+    .then((vehicles) => {
+      const vehicleSelect = document.getElementById('vehicle-id')
+      vehicleSelect.innerHTML = ''
+
+      vehicles.forEach((vehicle) => {
+        const option = document.createElement('option')
+        option.value = vehicle.ID_Pojazdu
+        option.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.NrRejestracyjny})`
+        vehicleSelect.appendChild(option)
+      })
+    })
+    .catch((error) => console.error('Error fetching user vehicles:', error))
+}
+
+// Obsługa zamykania modalu
+document.querySelectorAll('.close-modal').forEach((button) => {
+  button.addEventListener('click', () => {
+    button.closest('.modal').classList.add('hidden')
+  })
+})
+
+// Obsługa formularza rezerwacji
+document
+  .getElementById('reservation-form')
+  .addEventListener('submit', function (event) {
+    event.preventDefault()
+
+    const formData = new FormData(this)
+
+    fetch('../backend/php/make_reservation.php', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert('Reservation successful!')
+          this.closest('.modal').classList.add('hidden')
+        } else {
+          alert('Reservation failed: ' + data.message)
+        }
+      })
+      .catch((error) => console.error('Error making reservation:', error))
+  })
