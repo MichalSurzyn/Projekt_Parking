@@ -26,7 +26,7 @@ function openReservationModal(event) {
   document.getElementById('reservation-parking-id').value = parkingId
 
   // Pobierz cennik dla wybranego parkingu
-  fetch(`../backend/php/get_pricing_for_parking.php?parking_id=${parkingId}`)
+  fetch(`../backend/php/get_pricing.php?parking_id=${parkingId}`)
     .then((response) => response.json())
     .then((data) => {
       const pricingSection = document.getElementById(
