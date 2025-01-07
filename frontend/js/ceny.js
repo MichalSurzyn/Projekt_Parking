@@ -65,6 +65,17 @@ function calculateParkingPrice() {
 
         console.log('Calculated price:', price)
         priceElement.textContent = `Price: ${price.toFixed(2)} PLN`
+
+        // Add calculated price to a hidden input field in the form
+        let priceInput = document.getElementById('reservation-price')
+        if (!priceInput) {
+          priceInput = document.createElement('input')
+          priceInput.type = 'hidden'
+          priceInput.id = 'reservation-price'
+          priceInput.name = 'price'
+          reservationForm.appendChild(priceInput)
+        }
+        priceInput.value = price.toFixed(2)
       } else {
         console.error('Invalid pricing data:', data)
         priceElement.textContent = 'Price: '

@@ -12,8 +12,9 @@ $parkingId = $_POST['parking_id'] ?? null;
 $vehicleId = $_POST['vehicle_id'] ?? null;
 $endDate = $_POST['end_date'] ?? null;
 $priceType = $_POST['price_type'] ?? 'Za godzinę'; // Default to hourly
+$price = $_POST['price'] ?? 0.00;
 
-if (!$parkingId || !$vehicleId || !$endDate) {
+if (!$parkingId || !$vehicleId || !$endDate || !$price) {
     echo json_encode(["success" => false, "message" => "All fields are required."]);
     exit();
 }
@@ -33,7 +34,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO Rezerwacja (ID_Uzytkownika, ID_Parkingu, ID_Pojazdu, Data_Rezerwacji, Data_Wygasniecia, Typ_Ceny, Cena, Status) 
-        VALUES (?, ?, ?, ?, ?, ?, 0.00, 'Pending')";
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -42,7 +43,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("iiisss", $userId, $parkingId, $vehicleId, $startDate, $endDate, $priceType);
+$stmt->bind_param("iiisssd", $userId, $parkingId, $vehicleId, $startDate, $endDate, $priceType, $price);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
