@@ -13,6 +13,7 @@
         <a href="#" id="login-link">Login</a>
         <a href="#" id="register-link">Register</a>
         <button onclick="location.href='admin.html'">Go to Admin Page</button>
+        <button id="profile-link">Profile</button>
         <h1 id="kto_to"></h1>
       </nav>
     </header>
@@ -78,7 +79,6 @@
             <button type="button" class="close-modal">Close</button>
           </form>
           <div id="register-message"></div>
-          <!-- Miejsce na komunikaty -->
         </div>
       </section>
 
@@ -87,9 +87,7 @@
         <div class="modal-content">
           <h2>Make a Reservation</h2>
           <p id="reservation-parking-name"></p>
-          <p id="reservation-parking-pricing">
-            <!-- Cennik parkingu będzie wyświetlany tutaj -->
-          </p>
+          <p id="reservation-parking-pricing"></p>
           <form id="reservation-form" method="POST">
             <input
               type="hidden"
@@ -98,9 +96,7 @@
             />
 
             <label>Vehicle:</label>
-            <div id="vehicle-list">
-              <!-- Przyciski radiowe będą dynamicznie generowane -->
-            </div>
+            <div id="vehicle-list"></div>
 
             <label for="reservation-date-end">End Date:</label>
             <input
@@ -137,7 +133,6 @@
             </div>
 
             <p id="calculated-price">Price:</p>
-            <!-- Dodaj ten element -->
 
             <button type="submit">Reserve</button>
             <button type="button" class="close-modal">Close</button>
@@ -145,35 +140,41 @@
         </div>
       </section>
 
-      <!-- Sekcja wyświetlania pojazdów -->
-      <div id="vehicleListContainer" style="display: none">
-        <h2>Twoje Pojazdy</h2>
-        <ul id="vehicleList"></ul>
-      </div>
+      <!-- User Profile Modal -->
+      <section id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>User Profile</h2>
+          <div id="vehicleListContainer">
+            <h2>Twoje Pojazdy</h2>
+            <ul id="vehicleList"></ul>
+          </div>
 
-      <div id="vehicleFormContainer" style="display: none">
-        <h2>Dodaj pojazd</h2>
-        <form id="addVehicleForm">
-          <label for="nrRejestracyjny">Numer Rejestracyjny:</label>
-          <input
-            type="text"
-            id="nrRejestracyjny"
-            name="nrRejestracyjny"
-            required
-          /><br />
+          <div id="vehicleFormContainer">
+            <h2>Dodaj pojazd</h2>
+            <form id="addVehicleForm">
+              <label for="nrRejestracyjny">Numer Rejestracyjny:</label>
+              <input
+                type="text"
+                id="nrRejestracyjny"
+                name="nrRejestracyjny"
+                required
+              /><br />
 
-          <label for="marka">Marka:</label>
-          <input type="text" id="marka" name="marka" required /><br />
+              <label for="marka">Marka:</label>
+              <input type="text" id="marka" name="marka" required /><br />
 
-          <label for="model">Model:</label>
-          <input type="text" id="model" name="model" required /><br />
+              <label for="model">Model:</label>
+              <input type="text" id="model" name="model" required /><br />
 
-          <label for="typ">Typ:</label>
-          <input type="text" id="typ" name="typ" required /><br />
+              <label for="typ">Typ:</label>
+              <input type="text" id="typ" name="typ" required /><br />
 
-          <button type="submit">Dodaj pojazd</button>
-        </form>
-      </div>
+              <button type="submit">Dodaj pojazd</button>
+            </form>
+          </div>
+          <button type="button" class="close-modal">Close</button>
+        </div>
+      </section>
     </main>
 
     <script src="js/auth.js"></script>

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.loggedIn) {
         vehicleFormContainer.style.display = 'block'
         vehicleListContainer.style.display = 'block'
-        loadVehicles() // Załaduj pojazdy użytkownika
+        fetchAndDisplayVehicles() // Załaduj pojazdy użytkownika
       } else {
         vehicleFormContainer.style.display = 'none'
         vehicleListContainer.style.display = 'none'
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.success) {
           alert('Pojazd został dodany!')
           addVehicleForm.reset()
-          loadVehicles() // Odśwież listę pojazdów
+          fetchAndDisplayVehicles() // Odśwież listę pojazdów
         } else {
           alert('Błąd: ' + data.message)
         }
@@ -45,23 +45,74 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // Funkcja ładowania pojazdów użytkownikaasdsdf
-  function loadVehicles() {
+  function fetchAndDisplayVehicles() {
     fetch('../backend/php/get_vehicles.php')
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          vehicleList.innerHTML = '' // Wyczyść listę
+          const vehicleList = document.getElementById('vehicleList')
+          vehicleList.innerHTML = '' // Wyczyść istniejącą listę
+
           data.vehicles.forEach((vehicle) => {
-            const listItem = document.createElement('li')
-            listItem.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.Nr_Rejestracyjny}) - ${vehicle.Typ}`
-            vehicleList.appendChild(listItem)
+            const li = document.createElement('li')
+            li.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.Nr_Rejestracyjny})`
+            const deleteButton = document.createElement('button')
+            deleteButton.textContent = 'Usuń'
+            deleteButton.addEventListener('click', () => {
+              deleteVehicle(vehicle.ID_Pojazdu)
+            })
+            li.appendChild(deleteButton)
+            vehicleList.appendChild(li)
           })
         } else {
-          alert('Błąd podczas ładowania pojazdów: ' + data.message)
+          console.error('Error fetching vehicles:', data.message)
         }
       })
-      .catch((error) =>
-        console.error('Błąd podczas ładowania pojazdów:', error)
-      )
+      .catch((error) => console.error('Error fetching vehicles:', error))
   }
+
+  function deleteVehicle(vehicleId) {
+    fetch(`../backend/php/delete_vehicle.php?id=${vehicleId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          fetchAndDisplayVehicles() // Odśwież listę pojazdów
+        } else {
+          console.error('Error deleting vehicle:', data.message)
+        }
+      })
+      .catch((error) => console.error('Error deleting vehicle:', error))
+  }
+
+  document
+    .getElementById('addVehicleForm')
+    .addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      const formData = new FormData(event.target)
+      const data = {}
+      formData.forEach((value, key) => {
+        data[key] = value
+      })
+
+      fetch('../backend/php/add_vehicle.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            fetchAndDisplayVehicles() // Odśwież listę pojazdów
+            event.target.reset()
+          } else {
+            console.error('Error adding vehicle:', data.message)
+          }
+        })
+        .catch((error) => console.error('Error adding vehicle:', error))
+    })
 })
