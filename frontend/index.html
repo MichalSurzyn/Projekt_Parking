@@ -101,13 +101,6 @@
               <!-- Przyciski radiowe będą dynamicznie generowane -->
             </div>
 
-            <label for="reservation-date-start">Start Date:</label>
-            <input
-              type="datetime-local"
-              id="reservation-date-start"
-              name="start_date"
-              required
-            />
             <label for="reservation-date-end">End Date:</label>
             <input
               type="datetime-local"
@@ -115,6 +108,36 @@
               name="end_date"
               required
             />
+
+            <label>Price Type:</label>
+            <div>
+              <input
+                type="radio"
+                id="price-hourly"
+                name="price_type"
+                value="Za godzinę"
+                checked
+              />
+              <label for="price-hourly">Hourly</label>
+              <input
+                type="radio"
+                id="price-daily"
+                name="price_type"
+                value="Za dzień"
+              />
+              <label for="price-daily">Daily</label>
+              <input
+                type="radio"
+                id="price-monthly"
+                name="price_type"
+                value="Za miesiąc"
+              />
+              <label for="price-monthly">Monthly</label>
+            </div>
+
+            <p id="calculated-price">Price:</p>
+            <!-- Dodaj ten element -->
+
             <button type="submit">Reserve</button>
             <button type="button" class="close-modal">Close</button>
           </form>

@@ -10,13 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['userId'])) {
 $userId = $_SESSION['userId'];
 $parkingId = $_POST['parking_id'] ?? null;
 $vehicleId = $_POST['vehicle_id'] ?? null;
-$startDate = $_POST['start_date'] ?? null;
 $endDate = $_POST['end_date'] ?? null;
+$priceType = $_POST['price_type'] ?? 'Za godzinę'; // Default to hourly
 
-if (!$parkingId || !$vehicleId || !$startDate || !$endDate) {
+if (!$parkingId || !$vehicleId || !$endDate) {
     echo json_encode(["success" => false, "message" => "All fields are required."]);
     exit();
 }
+
+$startDate = date('Y-m-d H:i:s'); // Set start date to now
 
 $servername = "localhost";
 $username = "root";
@@ -26,13 +28,21 @@ $dbname = "ParkingSystem";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]);
+    exit();
 }
 
-$sql = "INSERT INTO Rezerwacja (ID_Uzytkownika, ID_Parkingu, ID_Pojazdu, Data_Rezerwacji, Data_Wygasniecia, Cena, Status) 
-        VALUES (?, ?, ?, ?, ?, 0.00, 'Pending')";
+$sql = "INSERT INTO Rezerwacja (ID_Uzytkownika, ID_Parkingu, ID_Pojazdu, Data_Rezerwacji, Data_Wygasniecia, Typ_Ceny, Cena, Status) 
+        VALUES (?, ?, ?, ?, ?, ?, 0.00, 'Pending')";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iiiss", $userId, $parkingId, $vehicleId, $startDate, $endDate);
+
+if (!$stmt) {
+    echo json_encode(["success" => false, "message" => "Database error: " . $conn->error]);
+    $conn->close();
+    exit();
+}
+
+$stmt->bind_param("iiisss", $userId, $parkingId, $vehicleId, $startDate, $endDate, $priceType);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
