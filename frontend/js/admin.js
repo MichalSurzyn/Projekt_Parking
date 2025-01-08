@@ -99,21 +99,25 @@ document.addEventListener('DOMContentLoaded', () => {
               `
               )
               .join('')}
-            <button class="edit-pricing-btn" data-id="${parking.ID_Parkingu}" 
-                    data-hourly="${
-                      parking.cennik.find((c) => c.Typ_Ceny === 'Hourly')
-                        ?.Cena || 0
-                    }" 
-                    data-daily="${
-                      parking.cennik.find((c) => c.Typ_Ceny === 'Daily')
-                        ?.Cena || 0
-                    }" 
-                    data-monthly="${
-                      parking.cennik.find((c) => c.Typ_Ceny === 'Monthly')
-                        ?.Cena || 0
-                    }">
-              Edit Pricing
+            <button
+                class="edit-pricing-btn"
+                data-id="${parking.ID_Parkingu}" 
+                data-hourly="${
+                  parking.cennik.find((c) => c.Typ_Ceny === 'Za godzinę')
+                    ?.Cena || 0
+                }" 
+                data-daily="${
+                  parking.cennik.find((c) => c.Typ_Ceny === 'Za dzień')?.Cena ||
+                  0
+                }" 
+                data-monthly="${
+                  parking.cennik.find((c) => c.Typ_Ceny === 'Za miesiąc')
+                    ?.Cena || 0
+                }"
+              >
+                Edit Pricing
             </button>
+
         </div>
     `
           dashboard.appendChild(parkingDiv)
@@ -145,9 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Wypełnij pola formularza
             document.getElementById('editPricingId').value = id
-            document.getElementById('editHourlyRate').value = hourly
-            document.getElementById('editDailyRate').value = daily
-            document.getElementById('editMonthlyRate').value = monthly
+            document.getElementById('editHourlyRate').value =
+              parseFloat(hourly) || 0 // Domyślna wartość 0
+            document.getElementById('editDailyRate').value =
+              parseFloat(daily) || 0
+            document.getElementById('editMonthlyRate').value =
+              parseFloat(monthly) || 0
 
             // Pokaż formularz i nakładkę
             document
@@ -182,7 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Parking updated successfully!')
         document.getElementById('editParkingFormContainer').style.display =
           'none'
-        loadDashboard(sessionStorage.getItem('admin_id'))
+        //loadDashboard(sessionStorage.getItem('admin_id'))
+        location.reload()
       } else {
         alert('Failed to update parking: ' + result.message)
       }
@@ -205,7 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Pricing updated successfully!')
         document.getElementById('editPricingFormContainer').style.display =
           'none'
-        loadDashboard(sessionStorage.getItem('admin_id'))
+        //loadDashboard(sessionStorage.getItem('admin_id'))
+        location.reload()
       } else {
         alert('Failed to update pricing: ' + result.message)
       }

@@ -48,7 +48,13 @@ if (isset($_SESSION['admin_id'])) {
 
 // Load dashboard
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($adminId)) {
-    $parkingsQuery = "SELECT * FROM parking WHERE ID_Administratora = ?";
+    // Zapytanie, które łączy tabelę admin_parking z parking
+    $parkingsQuery = "
+        SELECT p.*
+        FROM admin_parking ap
+        JOIN parking p ON ap.ID_Parkingu = p.ID_Parkingu
+        WHERE ap.ID_Administratora = ?
+    ";
     $stmt = $mysqli->prepare($parkingsQuery);
     $stmt->bind_param('i', $adminId);
     $stmt->execute();
@@ -56,19 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($adminId)) {
 
     $response = [];
     while ($parking = $parkings->fetch_assoc()) {
+        // Pobierz cennik dla każdego parkingu
         $pricesQuery = "SELECT * FROM cennik WHERE ID_Parkingu = ?";
         $priceStmt = $mysqli->prepare($pricesQuery);
         $priceStmt->bind_param('i', $parking['ID_Parkingu']);
         $priceStmt->execute();
         $prices = $priceStmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+        // Dodaj cennik do wyniku parkingu
         $parking['cennik'] = $prices;
         $response[] = $parking;
     }
 
+    // Zwróć odpowiedź jako JSON
     echo json_encode(["success" => true, "parkings" => $response]);
     exit();
 }
+
 
 
 // Aktualizacja parkingu
@@ -97,16 +107,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['hourlyR
     $dailyRate = $_POST['dailyRate'];
     $monthlyRate = $_POST['monthlyRate'];
 
-    $updatePricingQuery = "UPDATE cennik SET CenaZaH = ?, CenaZaDzien = ?, CenaZaMiesiac = ? WHERE ID_Cennika = ?";
-    $stmt = $mysqli->prepare($updatePricingQuery);
-    $stmt->bind_param('dddi', $hourlyRate, $dailyRate, $monthlyRate, $id);
+    $success = true; // Flaga dla śledzenia powodzenia operacji
 
-    if ($stmt->execute()) {
+    // Aktualizacja ceny za godzinę
+    $updateHourlyQuery = "UPDATE cennik SET Cena = ? WHERE ID_Parkingu = ? AND Typ_Ceny = 'Za godzinę'";
+    $stmt = $mysqli->prepare($updateHourlyQuery);
+    if ($stmt) {
+        $stmt->bind_param('di', $hourlyRate, $id);
+        if (!$stmt->execute()) {
+            $success = false;
+        }
+        $stmt->close();
+    } else {
+        $success = false;
+    }
+
+    // Aktualizacja ceny za dzień
+    $updateDailyQuery = "UPDATE cennik SET Cena = ? WHERE ID_Parkingu = ? AND Typ_Ceny = 'Za dzień'";
+    $stmt = $mysqli->prepare($updateDailyQuery);
+    if ($stmt) {
+        $stmt->bind_param('di', $dailyRate, $id);
+        if (!$stmt->execute()) {
+            $success = false;
+        }
+        $stmt->close();
+    } else {
+        $success = false;
+    }
+
+    // Aktualizacja ceny za miesiąc
+    $updateMonthlyQuery = "UPDATE cennik SET Cena = ? WHERE ID_Parkingu = ? AND Typ_Ceny = 'Za miesiąc'";
+    $stmt = $mysqli->prepare($updateMonthlyQuery);
+    if ($stmt) {
+        $stmt->bind_param('di', $monthlyRate, $id);
+        if (!$stmt->execute()) {
+            $success = false;
+        }
+        $stmt->close();
+    } else {
+        $success = false;
+    }
+
+    if ($success) {
         echo json_encode(["success" => true]);
     } else {
-        echo json_encode(["success" => false, "message" => "Failed to update pricing."]);
+        echo json_encode(["success" => false, "message" => "Failed to update some or all prices."]);
     }
     exit();
 }
+
+
 
 ?>
