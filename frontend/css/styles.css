@@ -1,8 +1,11 @@
+/* General styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #f4f4f9;
+  color: #333;
 }
 
 header {
@@ -12,10 +15,21 @@ header {
   text-align: center;
 }
 
-nav a {
+nav a,
+nav button {
   color: #fff;
   margin: 0 1em;
   text-decoration: none;
+  background: #444;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+nav button:hover,
+nav a:hover {
+  background: #555;
 }
 
 main {
@@ -32,6 +46,14 @@ main {
   margin: 0.5em 0;
   padding: 1em;
   border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer; /* Dodaj kursor wskazujący na klikalność */
+  transition: background 0.3s, transform 0.3s; /* Dodaj płynne przejście */
+}
+
+#parking-list li:hover {
+  background: #e0e0e0; /* Zmień tło na jaśniejsze przy hover */
+  transform: scale(1.02); /* Dodaj delikatne powiększenie przy hover */
 }
 
 /* Modal styles */
@@ -67,7 +89,8 @@ main {
   gap: 1em;
 }
 
-.modal-content form input {
+.modal-content form input,
+.modal-content form select {
   padding: 0.5em;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -92,29 +115,104 @@ main {
   align-items: center;
 }
 
-/*psuje wyświetlanie forma logowania
-.modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+/* Profile and Reservations styles */
+#vehicleListContainer,
+#reservationListContainer {
+  background: #fff;
   padding: 1em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
+  max-width: 40%;
+  margin-left: 30%;
 }
 
-.modal.hidden {
-  display: none;
+#vehicleListContainer h2,
+#reservationListContainer h2 {
+  margin-top: 0;
 }
 
-.modal-content {
+#vehicleList li,
+#reservationList li {
+  background: #f4f4f4;
+  margin: 0.5em 0;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#vehicleFormContainer,
+#reservationFormContainer {
+  background: #fff;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 30%;
+  margin-left: 35%;
+}
+
+#vehicleFormContainer h2,
+#reservationFormContainer h2 {
+  margin-top: 0;
+}
+
+#vehicleFormContainer form,
+#reservationFormContainer form {
   display: flex;
   flex-direction: column;
+  gap: 1em;
 }
 
-.close-modal {
-  margin-top: 1em;
+#vehicleFormContainer form input,
+#reservationFormContainer form input {
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 3px;
 }
-*/
+
+#vehicleFormContainer form button,
+#reservationFormContainer form button {
+  padding: 0.7em;
+  border: none;
+  border-radius: 3px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+#vehicleFormContainer form button:hover,
+#reservationFormContainer form button:hover {
+  background: #555;
+}
+
+/* Payment styles */
+#payment-container {
+  background: #fff;
+  padding: 2em;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+#payment-container h2 {
+  margin-top: 0;
+}
+
+#payment-container p {
+  margin: 1em 0;
+}
+
+#payment-container button {
+  padding: 0.7em 1.5em;
+  border: none;
+  border-radius: 3px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+#payment-container button:hover {
+  background: #555;
+}

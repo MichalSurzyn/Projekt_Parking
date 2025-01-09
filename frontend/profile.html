@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>User Profile</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <button id="logout-button">Logout</button>
+      </nav>
+    </header>
+    <main>
+      <div id="vehicleListContainer">
+        <h2>Twoje Pojazdy</h2>
+        <ul id="vehicleList"></ul>
+      </div>
+
+      <div id="vehicleFormContainer">
+        <h2>Dodaj pojazd</h2>
+        <form id="addVehicleForm">
+          <label for="nrRejestracyjny">Numer Rejestracyjny:</label>
+          <input
+            type="text"
+            id="nrRejestracyjny"
+            name="nrRejestracyjny"
+            required
+          /><br />
+
+          <label for="marka">Marka:</label>
+          <input type="text" id="marka" name="marka" required /><br />
+
+          <label for="model">Model:</label>
+          <input type="text" id="model" name="model" required /><br />
+
+          <label for="typ">Typ:</label>
+          <input type="text" id="typ" name="typ" required /><br />
+
+          <button type="submit">Dodaj pojazd</button>
+        </form>
+      </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/vehicles.js"></script>
+  </body>
+</html>

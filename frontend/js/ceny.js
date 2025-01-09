@@ -122,14 +122,12 @@ if (reservationForm) {
       method: 'POST',
       body: formData,
     })
-      .then((response) => response.text()) // Change to text to see the raw response
-      .then((text) => {
-        console.log('Raw response:', text)
-        const data = JSON.parse(text)
+      .then((response) => response.json())
+      .then((data) => {
         if (data.success) {
-          alert('Reservation successful!')
-          reservationForm.reset()
-          document.getElementById('calculated-price').textContent = 'Price: '
+          const reservationId = data.reservationId
+          const amount = formData.get('price')
+          window.location.href = `payment.html?reservation_id=${reservationId}&amount=${amount}`
         } else {
           alert('Reservation failed: ' + data.message)
         }

@@ -46,7 +46,8 @@ if (!$stmt) {
 $stmt->bind_param("iiisssd", $userId, $parkingId, $vehicleId, $startDate, $endDate, $priceType, $price);
 
 if ($stmt->execute()) {
-    echo json_encode(["success" => true]);
+    $reservationId = $stmt->insert_id;
+    echo json_encode(["success" => true, "reservationId" => $reservationId]);
 } else {
     echo json_encode(["success" => false, "message" => $stmt->error]);
 }

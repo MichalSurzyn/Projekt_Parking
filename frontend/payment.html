@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Payment</h1>
+      <nav>
+        <a href="index.html">Home</a>
+      </nav>
+    </header>
+    <main>
+      <h2>Confirm Payment</h2>
+      <p>Reservation ID: <span id="reservation-id"></span></p>
+      <p>Amount: <span id="reservation-amount"></span> PLN</p>
+      <button id="confirm-payment">Confirm Payment</button>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search)
+        const reservationId = urlParams.get('reservation_id')
+        const amount = urlParams.get('amount')
+
+        document.getElementById('reservation-id').textContent = reservationId
+        document.getElementById('reservation-amount').textContent = amount
+
+        document
+          .getElementById('confirm-payment')
+          .addEventListener('click', () => {
+            fetch(
+              `../backend/php/confirm_payment.php?reservation_id=${reservationId}`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  alert('Payment confirmed!')
+                  window.location.href = 'index.html'
+                } else {
+                  alert('Payment failed: ' + data.message)
+                }
+              })
+              .catch((error) =>
+                console.error('Error confirming payment:', error)
+              )
+          })
+
+        // Anuluj rezerwację po 5 minutach, jeśli płatność nie zostanie potwierdzona
+        setTimeout(() => {
+          fetch(
+            `../backend/php/cancel_reservation.php?reservation_id=${reservationId}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                alert('Reservation cancelled due to non-payment.')
+                window.location.href = 'index.html'
+              } else {
+                console.error('Error cancelling reservation:', data.message)
+              }
+            })
+            .catch((error) =>
+              console.error('Error cancelling reservation:', error)
+            )
+        }, 5 * 60 * 1000) // 5 minut
+      })
+    </script>
+  </body>
+</html>
