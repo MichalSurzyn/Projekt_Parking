@@ -142,6 +142,24 @@
         </div>
       </section>
 
+      <!-- Report Issue Modal -->
+      <section id="report-issue-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Report an Issue</h2>
+          <form id="report-issue-form" method="POST">
+            <input type="hidden" id="report-parking-id" name="parking_id" />
+            <label for="issue-description">Description:</label>
+            <textarea
+              id="issue-description"
+              name="description"
+              required
+            ></textarea>
+            <button type="submit">Submit</button>
+            <button type="button" class="close-modal">Close</button>
+          </form>
+        </div>
+      </section>
+
       <!-- User Profile Modal -->
       <section id="profile-modal" class="modal hidden">
         <div class="modal-content">
