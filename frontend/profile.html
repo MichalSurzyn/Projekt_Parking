@@ -15,6 +15,25 @@
       </nav>
     </header>
     <main>
+      <div id="userProfileContainer">
+        <h2>Your Profile</h2>
+        <form id="updateProfileForm">
+          <label for="firstname">First Name:</label>
+          <input type="text" id="firstname" name="firstname" required /><br />
+
+          <label for="lastname">Last Name:</label>
+          <input type="text" id="lastname" name="lastname" required /><br />
+
+          <label for="phone">Phone:</label>
+          <input type="text" id="phone" name="phone" /><br />
+
+          <label for="nip">NIP:</label>
+          <input type="text" id="nip" name="nip" /><br />
+
+          <button type="submit">Update Profile</button>
+        </form>
+      </div>
+
       <div id="vehicleListContainer">
         <h2>Twoje Pojazdy</h2>
         <ul id="vehicleList"></ul>
@@ -46,6 +65,7 @@
     </main>
 
     <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
     <script src="js/vehicles.js"></script>
   </body>
 </html>

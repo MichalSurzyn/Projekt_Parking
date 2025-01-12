@@ -170,21 +170,7 @@ document
       .catch((error) => console.error('Error making reservation:', error))
   })
 
-// Dodaj obsługę przycisków "Your Vehicles" i "Your Reservations"
-document.getElementById('profile-link').addEventListener('click', (event) => {
-  event.preventDefault()
-  fetch('../backend/php/check_login.php')
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.loggedIn) {
-        window.location.href = 'profile.html'
-      } else {
-        document.getElementById('login-form').classList.remove('hidden')
-      }
-    })
-    .catch((error) => console.error('Error checking login status:', error))
-})
-
+// Dodaj obsługę przycisków "Your Reservations" i "Your Profile"
 document
   .getElementById('reservations-link')
   .addEventListener('click', (event) => {
@@ -194,6 +180,22 @@ document
       .then((data) => {
         if (data.loggedIn) {
           window.location.href = 'reservations.html'
+        } else {
+          document.getElementById('login-form').classList.remove('hidden')
+        }
+      })
+      .catch((error) => console.error('Error checking login status:', error))
+  })
+
+document
+  .getElementById('user-profile-link')
+  .addEventListener('click', (event) => {
+    event.preventDefault()
+    fetch('../backend/php/check_login.php')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          window.location.href = 'profile.html'
         } else {
           document.getElementById('login-form').classList.remove('hidden')
         }
