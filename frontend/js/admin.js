@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginContainer = document.getElementById('loginContainer')
   const dashboard = document.getElementById('dashboard')
   const logoutButton = document.getElementById('logoutButton')
+  const problemReportsList = document.getElementById('problemReportsList')
+  const tabs = document.querySelectorAll('.tab-button')
+  const tabContents = document.querySelectorAll('.tab-content')
 
   // Logowanie
   loginForm.addEventListener('submit', async (event) => {
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginContainer.style.display = 'none'
         logoutButton.style.display = 'block'
         loadDashboard(result.admin_id)
+        loadProblemReports(result.admin_id)
       } else {
         alert('Login failed: ' + result.message)
       }
@@ -48,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginContainer.style.display = 'flex'
         logoutButton.style.display = 'none'
         dashboard.style.display = 'none'
+        problemReportsList.innerHTML = '' // Clear problem reports list
       } else {
         alert('Failed to log out: ' + result.message)
       }
@@ -63,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loginContainer.style.display = 'none'
     logoutButton.style.display = 'block'
     loadDashboard(adminId)
+    loadProblemReports(adminId)
+    showTab('dashboard')
   }
 
   async function loadDashboard(adminId) {
@@ -172,6 +179,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  async function loadProblemReports(adminId) {
+    try {
+      const response = await fetch(
+        `../backend/php/get_problem_reports.php?admin_id=${adminId}`
+      )
+      const result = await response.json()
+
+      if (result.success) {
+        problemReportsList.innerHTML = ''
+
+        result.problems.forEach((problem) => {
+          const li = document.createElement('li')
+          li.innerHTML = `
+            <p><strong>Parking ID:</strong> ${problem.ID_Parkingu}</p>
+            <p><strong>Description:</strong> ${problem.Opis_Problemu}</p>
+            <p class="report-date"><strong>Date:</strong> ${problem.Data_Zgloszenia}</p>
+          `
+          problemReportsList.appendChild(li)
+        })
+      } else {
+        alert('Failed to load problem reports: ' + result.message)
+      }
+    } catch (error) {
+      console.error('Error loading problem reports:', error)
+      alert('An error occurred while loading the problem reports.')
+    }
+  }
+
   // Obsługa zapisywania edytowanego parkingu
   document
     .getElementById('editParkingForm')
@@ -246,4 +281,19 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     document.getElementById('overlay').classList.remove('active')
   })
+
+  // Obsługa zakładek (tabs)
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'))
+      tab.classList.add('active')
+      showTab(tab.dataset.tab)
+    })
+  })
+
+  function showTab(tabName) {
+    tabContents.forEach((content) => {
+      content.style.display = content.id === tabName ? 'block' : 'none'
+    })
+  }
 })
