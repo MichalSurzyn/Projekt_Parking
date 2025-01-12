@@ -28,7 +28,23 @@
         Log Out
       </button>
 
-      <div id="dashboard" style="display: none" class="dashboard"></div>
+      <div class="tabs">
+        <button class="tab-button active" data-tab="dashboard">
+          Dashboard
+        </button>
+        <button class="tab-button" data-tab="problemReports">
+          Problem Reports
+        </button>
+      </div>
+
+      <div id="dashboard" class="tab-content dashboard"></div>
+
+      <div id="problemReports" class="tab-content" style="display: none">
+        <div id="problemReportsContainer" class="form-rep">
+          <h2>Problem Reports</h2>
+          <ul id="problemReportsList"></ul>
+        </div>
+      </div>
 
       <div id="editParkingFormContainer" class="form-container">
         <form id="editParkingForm">
@@ -90,12 +106,6 @@
           <button type="submit">Save Pricing</button>
           <button type="button" id="closeEditPricingForm">Cancel</button>
         </form>
-      </div>
-
-      <!-- New section for problem reports -->
-      <div id="problemReportsContainer" class="form-rep">
-        <h2>Problem Reports</h2>
-        <ul id="problemReportsList"></ul>
       </div>
     </div>
     <div id="overlay" class="overlay"></div>

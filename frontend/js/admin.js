@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutButton.style.display = 'block'
         loadDashboard(result.admin_id)
         loadProblemReports(result.admin_id)
+        showTab('dashboard')
       } else {
         alert('Login failed: ' + result.message)
       }
