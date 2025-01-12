@@ -3,7 +3,6 @@ document
   .getElementById('login-form')
   .addEventListener('submit', function (event) {
     event.preventDefault()
-    //test
     const email = document.getElementById('login-email').value
     const password = document.getElementById('login-password').value
 
@@ -14,21 +13,7 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Response data:', data) // Debugowanie odpowiedzi
         if (data.success) {
-          /*alert(
-            `Login successful! Logged in as: ${data.firstName} ${data.lastName}`
-          )
-          */
-          // Wyświetlenie imienia i nazwiska na stronie
-          //const userInfo = document.createElement('p')
-          //userInfo.id = 'user-info'
-          //userInfo.textContent = `Zalogowano jako: ${data.firstName} ${data.lastName}`
-          //document.body.prepend(userInfo)
-
-          document.getElementById('login-link').style.display = 'none'
-          document.getElementById('register-link').style.display = 'none'
-
           document.getElementById('login-link').style.display = 'none'
           document.getElementById('register-link').style.display = 'none'
 
@@ -96,7 +81,6 @@ function logout() {
 }
 
 // Sprawdzenie, czy użytkownik jest zalogowany
-
 fetch('../backend/php/check_login.php')
   .then((response) => response.json())
   .then((data) => {
@@ -127,9 +111,6 @@ function loadUserVehicles() {
   fetch('../backend/php/get_vehicles.php')
     .then((response) => response.json())
     .then((data) => {
-      console.log('Fetched vehicles:', data) // Loguj całą odpowiedź, aby upewnić się, że jest poprawna
-
-      // Sprawdź, czy odpowiedź zawiera właściwość `vehicles`
       if (data.success && Array.isArray(data.vehicles)) {
         const vehicles = data.vehicles
         const vehicleList = document.getElementById('vehicle-list')
@@ -187,4 +168,35 @@ document
         }
       })
       .catch((error) => console.error('Error making reservation:', error))
+  })
+
+// Dodaj obsługę przycisków "Your Vehicles" i "Your Reservations"
+document.getElementById('profile-link').addEventListener('click', (event) => {
+  event.preventDefault()
+  fetch('../backend/php/check_login.php')
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.loggedIn) {
+        window.location.href = 'profile.html'
+      } else {
+        document.getElementById('login-form').classList.remove('hidden')
+      }
+    })
+    .catch((error) => console.error('Error checking login status:', error))
+})
+
+document
+  .getElementById('reservations-link')
+  .addEventListener('click', (event) => {
+    event.preventDefault()
+    fetch('../backend/php/check_login.php')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          window.location.href = 'reservations.html'
+        } else {
+          document.getElementById('login-form').classList.remove('hidden')
+        }
+      })
+      .catch((error) => console.error('Error checking login status:', error))
   })
