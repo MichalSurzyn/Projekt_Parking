@@ -196,8 +196,32 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Parking ID:</strong> ${problem.ID_Parkingu}</p>
             <p><strong>Description:</strong> ${problem.Opis_Problemu}</p>
             <p class="report-date"><strong>Date:</strong> ${problem.Data_Zgloszenia}</p>
+            <button class="complete-report-btn" data-id="${problem.ID_Zgloszenia}">Zakończ</button>
           `
           problemReportsList.appendChild(li)
+        })
+
+        // Obsługa przycisków zakończenia zgłoszenia
+        document.querySelectorAll('.complete-report-btn').forEach((btn) => {
+          btn.addEventListener('click', async (e) => {
+            const reportId = e.target.dataset.id
+            try {
+              const response = await fetch(
+                `../backend/php/complete_report.php?report_id=${reportId}`,
+                { method: 'POST' }
+              )
+              const result = await response.json()
+              if (result.success) {
+                alert('Report closed successfully!')
+                loadProblemReports(adminId) // Odśwież listę zgłoszeń
+              } else {
+                alert('Closing the report failed: ' + result.message)
+              }
+            } catch (error) {
+              console.error('Error completing report:', error)
+              alert('Closing the report failed.')
+            }
+          })
         })
       } else {
         alert('Failed to load problem reports: ' + result.message)

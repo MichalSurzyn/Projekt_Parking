@@ -2,12 +2,22 @@
 header('Content-Type: application/json');
 session_start();
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(["success" => false, "message" => "Invalid request method."]);
+    exit();
+}
+
 if (!isset($_SESSION['admin_id'])) {
     echo json_encode(["success" => false, "message" => "Unauthorized"]);
     exit();
 }
 
-$adminId = $_SESSION['admin_id'];
+$reportId = $_GET['report_id'] ?? null;
+
+if (!$reportId) {
+    echo json_encode(["success" => false, "message" => "Report ID is required."]);
+    exit();
+}
 
 $servername = "localhost";
 $username = "root";
@@ -21,12 +31,7 @@ if ($conn->connect_error) {
     exit();
 }
 
-$sql = "
-    SELECT z.ID_Zgloszenia, z.ID_Parkingu, z.Opis_Problemu, z.Data_Zgloszenia
-    FROM Zgloszenie z
-    JOIN admin_parking ap ON z.ID_Parkingu = ap.ID_Parkingu
-    WHERE ap.ID_Administratora = ? AND z.Status_Zgloszenia = 'Pending'
-";
+$sql = "UPDATE Zgloszenie SET Status_Zgloszenia = 'Closed' WHERE ID_Zgloszenia = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -35,16 +40,13 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("i", $adminId);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt->bind_param("i", $reportId);
 
-$problems = [];
-while ($row = $result->fetch_assoc()) {
-    $problems[] = $row;
+if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
+} else {
+    echo json_encode(["success" => false, "message" => $stmt->error]);
 }
-
-echo json_encode(["success" => true, "problems" => $problems]);
 
 $stmt->close();
 $conn->close();
