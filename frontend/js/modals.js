@@ -2,6 +2,7 @@
 const loginModal = document.getElementById('login-form')
 const registerModal = document.getElementById('register-form')
 const profileModal = document.getElementById('profile-modal') // Dodaj ten element
+const reportIssueModal = document.getElementById('report-issue-modal') // Dodaj ten element
 const loginLink = document.getElementById('login-link')
 const registerLink = document.getElementById('register-link')
 const profileLink = document.getElementById('profile-link') // Dodaj ten element
@@ -35,5 +36,7 @@ closeButtons.forEach((button) => {
     loginModal.classList.add('hidden')
     registerModal.classList.add('hidden')
     profileModal.classList.add('hidden') // Dodaj ten element
+    reportIssueModal.classList.add('hidden') // Dodaj ten element
+    document.getElementById('issue-description').value = '' // Resetuj textarea
   })
 })
