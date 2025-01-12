@@ -21,7 +21,7 @@ if ($conn->connect_error) {
     exit();
 }
 
-$sql = "SELECT r.ID_Rezerwacji, p.Nazwa AS ParkingName, v.Marka AS VehicleName, r.Data_Rezerwacji AS StartDate, r.Data_Wygasniecia AS EndDate, r.Status 
+$sql = "SELECT r.ID_Rezerwacji, p.Nazwa AS ParkingName, v.Marka AS VehicleName, r.Data_Rezerwacji AS StartDate, r.Data_Wygasniecia AS EndDate, r.Cena, r.Status 
         FROM Rezerwacja r
         JOIN Parking p ON r.ID_Parkingu = p.ID_Parkingu
         JOIN Pojazd v ON r.ID_Pojazdu = v.ID_Pojazdu

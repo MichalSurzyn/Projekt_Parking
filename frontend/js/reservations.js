@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           data.reservations.forEach((reservation) => {
             const li = document.createElement('li')
-            li.textContent = `Parking: ${reservation.ParkingName}, Vehicle: ${reservation.VehicleName}, Start: ${reservation.StartDate}, End: ${reservation.EndDate}, Status: ${reservation.Status}`
+            li.textContent = `Parking: ${reservation.ParkingName}, Vehicle: ${reservation.VehicleName}, Start: ${reservation.StartDate}, End: ${reservation.EndDate}, Price: ${reservation.Cena}, Status: ${reservation.Status}`
             reservationList.appendChild(li)
           })
         } else {
