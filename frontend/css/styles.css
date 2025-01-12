@@ -117,7 +117,8 @@ main {
 
 /* Profile and Reservations styles */
 #vehicleListContainer,
-#reservationListContainer {
+#reservationListContainer,
+#userProfileContainer {
   background: #fff;
   padding: 1em;
   border-radius: 5px;
@@ -128,7 +129,8 @@ main {
 }
 
 #vehicleListContainer h2,
-#reservationListContainer h2 {
+#reservationListContainer h2,
+#userProfileContainer h2 {
   margin-top: 0;
 }
 

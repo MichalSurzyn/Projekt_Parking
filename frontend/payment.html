@@ -18,6 +18,7 @@
       <p>Reservation ID: <span id="reservation-id"></span></p>
       <p>Amount: <span id="reservation-amount"></span> PLN</p>
       <button id="confirm-payment">Confirm Payment</button>
+      <button id="cancel-payment">Cancel Payment</button>
     </main>
 
     <script>
@@ -49,8 +50,23 @@
               )
           })
 
+        document
+          .getElementById('cancel-payment')
+          .addEventListener('click', () => {
+            cancelPayment(reservationId)
+          })
+
         // Anuluj rezerwację po 5 minutach, jeśli płatność nie zostanie potwierdzona
         setTimeout(() => {
+          cancelPayment(reservationId)
+        }, 5 * 60 * 1000) // 5 minut
+
+        // Anuluj rezerwację, gdy strona zostanie opuszczona bez opłaty
+        window.addEventListener('beforeunload', (event) => {
+          cancelPayment(reservationId)
+        })
+
+        function cancelPayment(reservationId) {
           fetch(
             `../backend/php/cancel_reservation.php?reservation_id=${reservationId}`
           )
@@ -66,7 +82,7 @@
             .catch((error) =>
               console.error('Error cancelling reservation:', error)
             )
-        }, 5 * 60 * 1000) // 5 minut
+        }
       })
     </script>
   </body>
