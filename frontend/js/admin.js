@@ -193,10 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
         result.problems.forEach((problem) => {
           const li = document.createElement('li')
           li.innerHTML = `
-            <p><strong>Parking ID:</strong> ${problem.ID_Parkingu}</p>
+            <p><strong>Parking Name:</strong> ${problem.Nazwa_Parkingu}</p>
             <p><strong>Description:</strong> ${problem.Opis_Problemu}</p>
             <p class="report-date"><strong>Date:</strong> ${problem.Data_Zgloszenia}</p>
-            <button class="complete-report-btn" data-id="${problem.ID_Zgloszenia}">Zakończ</button>
+            <button class="complete-report-btn" data-id="${problem.ID_Zgloszenia}">Close Report</button>
           `
           problemReportsList.appendChild(li)
         })

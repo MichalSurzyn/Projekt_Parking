@@ -22,9 +22,10 @@ if ($conn->connect_error) {
 }
 
 $sql = "
-    SELECT z.ID_Zgloszenia, z.ID_Parkingu, z.Opis_Problemu, z.Data_Zgloszenia
+    SELECT z.ID_Zgloszenia, p.Nazwa AS Nazwa_Parkingu, z.Opis_Problemu, z.Data_Zgloszenia
     FROM Zgloszenie z
     JOIN admin_parking ap ON z.ID_Parkingu = ap.ID_Parkingu
+    JOIN Parking p ON z.ID_Parkingu = p.ID_Parkingu
     WHERE ap.ID_Administratora = ? AND z.Status_Zgloszenia = 'Pending'
 ";
 $stmt = $conn->prepare($sql);

@@ -13,6 +13,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 $reportId = $_GET['report_id'] ?? null;
+$adminId = $_SESSION['admin_id'];
 
 if (!$reportId) {
     echo json_encode(["success" => false, "message" => "Report ID is required."]);
@@ -31,7 +32,7 @@ if ($conn->connect_error) {
     exit();
 }
 
-$sql = "UPDATE Zgloszenie SET Status_Zgloszenia = 'Closed' WHERE ID_Zgloszenia = ?";
+$sql = "UPDATE Zgloszenie SET Status_Zgloszenia = 'Closed', ID_Administratora = ? WHERE ID_Zgloszenia = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -40,7 +41,7 @@ if (!$stmt) {
     exit();
 }
 
-$stmt->bind_param("i", $reportId);
+$stmt->bind_param("ii", $adminId, $reportId);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
