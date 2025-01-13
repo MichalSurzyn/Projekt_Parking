@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'reservationListContainer'
   )
   const reservationList = document.getElementById('reservationList')
+  const historyPaymentButton = document.getElementById('history-payment-button')
 
   // Sprawdź, czy użytkownik jest zalogowany
   fetch('../backend/php/check_login.php')
@@ -35,4 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch((error) => console.error('Error fetching reservations:', error))
   }
+
+  // Obsługa przycisku "History Payment"
+  historyPaymentButton.addEventListener('click', () => {
+    window.location.href = 'payment_history.html'
+  })
 })
