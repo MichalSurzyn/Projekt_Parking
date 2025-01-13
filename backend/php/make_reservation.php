@@ -47,6 +47,17 @@ $stmt->bind_param("iiisssd", $userId, $parkingId, $vehicleId, $startDate, $endDa
 
 if ($stmt->execute()) {
     $reservationId = $stmt->insert_id;
+
+    // Dodaj rekord do tabeli platnosc
+    $paymentSql = "INSERT INTO Platnosc (ID_Rezerwacji, Status_Platnosci, Data_Platnosci, Rodzaj, Data_Modyfikacji) 
+                   VALUES (?, 'Pending', NOW(), 'Standardowa', NOW())";
+    $paymentStmt = $conn->prepare($paymentSql);
+    if ($paymentStmt) {
+        $paymentStmt->bind_param("i", $reservationId);
+        $paymentStmt->execute();
+        $paymentStmt->close();
+    }
+
     echo json_encode(["success" => true, "reservationId" => $reservationId]);
 } else {
     echo json_encode(["success" => false, "message" => $stmt->error]);

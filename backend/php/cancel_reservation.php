@@ -33,6 +33,15 @@ if (!$stmt) {
 $stmt->bind_param("i", $reservationId);
 
 if ($stmt->execute()) {
+    // Zaktualizuj status płatności
+    $paymentSql = "UPDATE Platnosc SET Status_Platnosci = 'Cancelled', Data_Modyfikacji = NOW() WHERE ID_Rezerwacji = ?";
+    $paymentStmt = $conn->prepare($paymentSql);
+    if ($paymentStmt) {
+        $paymentStmt->bind_param("i", $reservationId);
+        $paymentStmt->execute();
+        $paymentStmt->close();
+    }
+
     echo json_encode(["success" => true]);
 } else {
     echo json_encode(["success" => false, "message" => $stmt->error]);
