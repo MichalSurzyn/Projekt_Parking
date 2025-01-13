@@ -17,6 +17,13 @@
     <main>
       <div id="reservationListContainer">
         <h2>Your Reservations</h2>
+        <label for="reservation-filter">Filter by status:</label>
+        <select id="reservation-filter">
+          <option value="all">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
         <ul id="reservationList"></ul>
       </div>
     </main>

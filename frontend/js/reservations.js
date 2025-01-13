@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   )
   const reservationList = document.getElementById('reservationList')
   const historyPaymentButton = document.getElementById('history-payment-button')
+  const reservationFilter = document.getElementById('reservation-filter')
 
   // Sprawdź, czy użytkownik jest zalogowany
   fetch('../backend/php/check_login.php')
@@ -28,14 +29,34 @@ document.addEventListener('DOMContentLoaded', () => {
           data.reservations.forEach((reservation) => {
             const li = document.createElement('li')
             li.textContent = `Parking: ${reservation.ParkingName}, Vehicle: ${reservation.VehicleName}, Start: ${reservation.StartDate}, End: ${reservation.EndDate}, Price: ${reservation.Cena}, Status: ${reservation.Status}`
+            li.dataset.status = reservation.Status // Dodaj status jako atrybut danych
             reservationList.appendChild(li)
           })
+
+          applyFilter() // Zastosuj filtr po załadowaniu rezerwacji
         } else {
           console.error('Error fetching reservations:', data.message)
         }
       })
       .catch((error) => console.error('Error fetching reservations:', error))
   }
+
+  // Funkcja filtrowania rezerwacji
+  function applyFilter() {
+    const filterValue = reservationFilter.value
+    const reservations = reservationList.querySelectorAll('li')
+
+    reservations.forEach((reservation) => {
+      if (filterValue === 'all' || reservation.dataset.status === filterValue) {
+        reservation.style.display = 'block'
+      } else {
+        reservation.style.display = 'none'
+      }
+    })
+  }
+
+  // Obsługa zmiany filtra
+  reservationFilter.addEventListener('change', applyFilter)
 
   // Obsługa przycisku "History Payment"
   historyPaymentButton.addEventListener('click', () => {

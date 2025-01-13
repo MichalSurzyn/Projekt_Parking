@@ -17,6 +17,13 @@
     <main>
       <div id="paymentHistoryContainer">
         <h2>Payment History</h2>
+        <label for="payment-filter">Filter by status:</label>
+        <select id="payment-filter">
+          <option value="all">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
         <ul id="paymentHistoryList"></ul>
       </div>
     </main>
