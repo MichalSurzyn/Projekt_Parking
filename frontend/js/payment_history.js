@@ -26,6 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li')
             li.textContent = `Reservation ID: ${payment.ID_Rezerwacji}, Status: ${payment.Status_Platnosci}, Date: ${payment.Data_Platnosci}, Type: ${payment.Rodzaj}, Last Modified: ${payment.Data_Modyfikacji}`
             li.dataset.status = payment.Status_Platnosci // Dodaj status jako atrybut danych
+
+            // Dodaj klasy CSS na podstawie statusu płatności
+            if (payment.Status_Platnosci === 'Confirmed') {
+              li.classList.add('reservation-completed')
+            } else if (payment.Status_Platnosci === 'Cancelled') {
+              li.classList.add('reservation-cancelled')
+            }
+
             paymentHistoryList.appendChild(li)
           })
 

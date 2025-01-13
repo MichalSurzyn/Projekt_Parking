@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li')
             li.textContent = `Parking: ${reservation.ParkingName}, Vehicle: ${reservation.VehicleName}, Start: ${reservation.StartDate}, End: ${reservation.EndDate}, Price: ${reservation.Cena}, Status: ${reservation.Status}`
             li.dataset.status = reservation.Status // Dodaj status jako atrybut danych
+
+            // Dodaj klasy CSS na podstawie statusu rezerwacji
+            if (reservation.Status === 'Confirmed') {
+              li.classList.add('reservation-completed')
+            } else if (reservation.Status === 'Cancelled') {
+              li.classList.add('reservation-cancelled')
+            }
+
             reservationList.appendChild(li)
           })
 
