@@ -146,29 +146,30 @@ document.querySelectorAll('.close-modal').forEach((button) => {
   })
 })
 
-// Obsługa formularza rezerwacji
-document
-  .getElementById('reservation-form')
-  .addEventListener('submit', function (event) {
-    event.preventDefault()
+// przeniesione do ceny.js
+// // Obsługa formularza rezerwacji
+// document
+//   .getElementById('reservation-form')
+//   .addEventListener('submit', function (event) {
+//     event.preventDefault()
 
-    const formData = new FormData(this)
+//     const formData = new FormData(this)
 
-    fetch('../backend/php/make_reservation.php', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert('Reservation successful!')
-          this.closest('.modal').classList.add('hidden')
-        } else {
-          alert('Reservation failed: ' + data.message)
-        }
-      })
-      .catch((error) => console.error('Error making reservation:', error))
-  })
+//     fetch('../backend/php/make_reservation.php', {
+//       method: 'POST',
+//       body: formData,
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         if (data.success) {
+//           alert('Reservation successful!')
+//           this.closest('.modal').classList.add('hidden')
+//         } else {
+//           alert('Reservation failed: ' + data.message)
+//         }
+//       })
+//       .catch((error) => console.error('Error making reservation:', error))
+//   })
 
 // Dodaj obsługę przycisków "Your Reservations" i "Your Profile"
 document

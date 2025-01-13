@@ -139,11 +139,10 @@ if (reservationForm) {
   }
 
   // Ensure only one event listener is attached
-  reservationForm.addEventListener('submit', (event) => {
-    if (event.currentTarget.hasAttribute('data-handled')) return
-    event.currentTarget.setAttribute('data-handled', 'true')
-    handleFormSubmit(event)
-  })
+  if (!reservationForm.hasAttribute('data-handled')) {
+    reservationForm.setAttribute('data-handled', 'true')
+    reservationForm.addEventListener('submit', handleFormSubmit)
+  }
 } else {
   console.error('Reservation form element not found')
 }
