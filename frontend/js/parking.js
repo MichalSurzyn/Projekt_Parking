@@ -28,8 +28,8 @@ function fetchAndDisplayCities() {
     .catch((error) => console.error('Error fetching cities data:', error))
 }
 
-// Modyfikacja funkcji pobierania parkingów, aby obsługiwała filtrację po mieście
-function fetchAndDisplayParkings(cityId = '') {
+// Modyfikacja funkcji pobierania parkingów, aby obsługiwała filtrację po mieście i lokalizacji
+function fetchAndDisplayParkings(cityId = '', location = '') {
   const url = cityId
     ? `../backend/php/get_parkings.php?city_id=${cityId}`
     : '../backend/php/get_parkings.php'
@@ -41,23 +41,28 @@ function fetchAndDisplayParkings(cityId = '') {
       parkingList.innerHTML = ''
 
       parkings.forEach((parking) => {
-        const li = document.createElement('li')
-        li.textContent = `${parking.Nazwa} - ${parking.Lokalizacja} - Available spots: ${parking.Liczba_Miejsc} (${parking.Typ})`
-        li.dataset.parkingId = parking.ID_Parkingu // ID parkingu
-        li.dataset.parkingName = parking.Nazwa // Nazwa parkingu
+        if (
+          location === '' ||
+          parking.Lokalizacja.toLowerCase().includes(location.toLowerCase())
+        ) {
+          const li = document.createElement('li')
+          li.textContent = `${parking.Nazwa} - ${parking.Lokalizacja} - Available spots: ${parking.Liczba_Miejsc} (${parking.Typ})`
+          li.dataset.parkingId = parking.ID_Parkingu // ID parkingu
+          li.dataset.parkingName = parking.Nazwa // Nazwa parkingu
 
-        // Dodaj przycisk zgłaszania problemów
-        const reportButton = document.createElement('button')
-        reportButton.textContent = '!'
-        reportButton.classList.add('report-button')
-        reportButton.addEventListener('click', (event) => {
-          event.stopPropagation() // Zatrzymaj propagację kliknięcia
-          openReportIssueModal(parking.ID_Parkingu)
-        })
+          // Dodaj przycisk zgłaszania problemów
+          const reportButton = document.createElement('button')
+          reportButton.textContent = '!'
+          reportButton.classList.add('report-button')
+          reportButton.addEventListener('click', (event) => {
+            event.stopPropagation() // Zatrzymaj propagację kliknięcia
+            openReportIssueModal(parking.ID_Parkingu)
+          })
 
-        li.appendChild(reportButton)
-        li.addEventListener('click', openReservationModal)
-        parkingList.appendChild(li)
+          li.appendChild(reportButton)
+          li.addEventListener('click', openReservationModal)
+          parkingList.appendChild(li)
+        }
       })
     })
     .catch((error) => console.error('Error fetching parking data:', error))
@@ -66,8 +71,10 @@ function fetchAndDisplayParkings(cityId = '') {
 // Zmodyfikowana funkcja automatycznej aktualizacji parkingów
 function updateParkingList() {
   const cityDropdown = document.getElementById('city-filter')
+  const locationSearch = document.getElementById('location-search')
   const selectedCityId = cityDropdown.value
-  fetchAndDisplayParkings(selectedCityId)
+  const location = locationSearch.value
+  fetchAndDisplayParkings(selectedCityId, location)
 }
 
 // Wywołanie funkcji pobierania miast i parkingów po załadowaniu strony
@@ -75,6 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchAndDisplayCities()
   fetchAndDisplayParkings()
   setInterval(updateParkingList, 5000) // Aktualizacja parkingów co 5 sekund, z zachowaniem filtra
+
+  // Obsługa wyszukiwania lokalizacji
+  const locationSearch = document.getElementById('location-search')
+  locationSearch.addEventListener('input', updateParkingList)
 })
 
 function openReservationModal(event) {
