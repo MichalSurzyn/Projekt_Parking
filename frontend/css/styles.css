@@ -118,7 +118,8 @@ main {
 /* Profile and Reservations styles */
 #vehicleListContainer,
 #reservationListContainer,
-#userProfileContainer {
+#userProfileContainer,
+#changePasswordContainer {
   background: #fff;
   padding: 1em;
   border-radius: 5px;
@@ -130,7 +131,8 @@ main {
 
 #vehicleListContainer h2,
 #reservationListContainer h2,
-#userProfileContainer h2 {
+#userProfileContainer h2,
+#changePasswordContainer h2 {
   margin-top: 0;
 }
 

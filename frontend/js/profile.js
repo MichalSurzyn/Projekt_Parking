@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const updateProfileForm = document.getElementById('updateProfileForm')
+  const changePasswordForm = document.getElementById('changePasswordForm')
 
   // Pobierz dane użytkownika i wypełnij formularz
   fetch('../backend/php/get_user_profile.php')
@@ -40,5 +41,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       })
       .catch((error) => console.error('Error updating profile:', error))
+  })
+
+  // Obsługa formularza zmiany hasła
+  changePasswordForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(changePasswordForm)
+    const data = Object.fromEntries(formData.entries())
+
+    fetch('../backend/php/change_password.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert('Password changed successfully!')
+          changePasswordForm.reset()
+        } else {
+          alert('Failed to change password: ' + data.message)
+        }
+      })
+      .catch((error) => console.error('Error changing password:', error))
   })
 })
