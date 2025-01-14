@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3>${parking.Nazwa}</h3>
         <p><strong>Location:</strong> ${parking.Lokalizacja}</p>
         <p><strong>Capacity:</strong> ${parking.Liczba_Miejsc}</p>
+        <p><strong>Available spots:</strong> ${parking.AvailableSpots}</p>
         <p><strong>Type:</strong> ${parking.Typ}</p>
         <button class="edit-parking-btn" data-id="${parking.ID_Parkingu}" 
                 data-name="${parking.Nazwa}" 
@@ -319,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showTab(tabName) {
     tabContents.forEach((content) => {
-      content.style.display = content.id === tabName ? 'block' : 'none'
+      content.style.display = content.id === tabName ? 'grid' : 'none'
     })
   }
 })

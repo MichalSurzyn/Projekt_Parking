@@ -26,6 +26,7 @@
         const urlParams = new URLSearchParams(window.location.search)
         const reservationId = urlParams.get('reservation_id')
         const amount = urlParams.get('amount')
+        let isRedirecting = false
 
         document.getElementById('reservation-id').textContent = reservationId
         document.getElementById('reservation-amount').textContent = amount
@@ -40,7 +41,8 @@
               .then((data) => {
                 if (data.success) {
                   alert('Payment confirmed!')
-                  window.location.href = 'index.html'
+                  //window.location.href = 'index.html'
+                  redirectTo('index.html')
                 } else {
                   alert('Payment failed: ' + data.message)
                 }
@@ -48,6 +50,7 @@
               .catch((error) =>
                 console.error('Error confirming payment:', error)
               )
+            x = 1
           })
 
         document
@@ -61,10 +64,12 @@
           cancelPayment(reservationId)
         }, 5 * 60 * 1000) // 5 minut
 
+        /*
         // Anuluj rezerwację, gdy strona zostanie opuszczona bez opłaty
         window.addEventListener('beforeunload', (event) => {
           cancelPayment(reservationId)
         })
+*/
 
         function cancelPayment(reservationId) {
           fetch(
@@ -74,7 +79,8 @@
             .then((data) => {
               if (data.success) {
                 alert('Reservation cancelled due to non-payment.')
-                window.location.href = 'index.html'
+                //window.location.href = 'index.html'
+                redirectTo('index.html')
               } else {
                 console.error('Error cancelling reservation:', data.message)
               }

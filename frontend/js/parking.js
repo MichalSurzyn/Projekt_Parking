@@ -46,7 +46,7 @@ function fetchAndDisplayParkings(cityId = '', location = '') {
           parking.Lokalizacja.toLowerCase().includes(location.toLowerCase())
         ) {
           const li = document.createElement('li')
-          li.textContent = `${parking.Nazwa} - ${parking.Lokalizacja} - Available spots: ${parking.Liczba_Miejsc} (${parking.Typ})`
+          li.textContent = `${parking.Nazwa} - ${parking.Lokalizacja} - Available spots: ${parking.AvailableSpots}  (${parking.Typ})`
           li.dataset.parkingId = parking.ID_Parkingu // ID parkingu
           li.dataset.parkingName = parking.Nazwa // Nazwa parkingu
 

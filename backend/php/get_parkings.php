@@ -18,13 +18,39 @@ $city_id = isset($_GET['city_id']) ? (int)$_GET['city_id'] : 0;
 
 // Zapytanie SQL do pobrania parkingów z filtrem lub bez
 if ($city_id > 0) {
-    $sql = "SELECT ID_Parkingu, Nazwa, Lokalizacja, Liczba_Miejsc, Typ FROM Parking WHERE ID_Miasta = ?";
+    $sql = "SELECT 
+                p.ID_Parkingu, 
+                p.Nazwa, 
+                p.Lokalizacja, 
+                p.Liczba_Miejsc - (
+                    SELECT COUNT(*) 
+                    FROM Rezerwacja r 
+                    WHERE r.ID_Parkingu = p.ID_Parkingu 
+                    AND r.Status = 'Confirmed' 
+                    AND r.Data_Wygasniecia > NOW()
+                ) AS AvailableSpots, 
+                p.Typ 
+            FROM Parking p 
+            WHERE p.ID_Miasta = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $city_id);
 } else {
-    $sql = "SELECT ID_Parkingu, Nazwa, Lokalizacja, Liczba_Miejsc, Typ FROM Parking";
+    $sql = "SELECT 
+                p.ID_Parkingu, 
+                p.Nazwa, 
+                p.Lokalizacja, 
+                p.Liczba_Miejsc - (
+                    SELECT COUNT(*) 
+                    FROM Rezerwacja r 
+                    WHERE r.ID_Parkingu = p.ID_Parkingu 
+                    AND r.Status = 'Confirmed' 
+                    AND r.Data_Wygasniecia > NOW()
+                ) AS AvailableSpots, 
+                p.Typ 
+            FROM Parking p";
     $stmt = $conn->prepare($sql);
 }
+
 
 $stmt->execute();
 $result = $stmt->get_result();

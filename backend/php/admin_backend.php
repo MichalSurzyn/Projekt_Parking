@@ -50,7 +50,18 @@ if (isset($_SESSION['admin_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($adminId)) {
     // Zapytanie, które łączy tabelę admin_parking z parking
     $parkingsQuery = "
-        SELECT p.*
+        SELECT p.ID_Parkingu, 
+                p.Nazwa, 
+                p.Lokalizacja, 
+                p.Liczba_Miejsc,
+        p.Liczba_Miejsc - (
+                    SELECT COUNT(*) 
+                    FROM Rezerwacja r 
+                    WHERE r.ID_Parkingu = p.ID_Parkingu 
+                    AND r.Status = 'confirmed' 
+                    AND r.Data_Wygasniecia > NOW()
+                ) AS AvailableSpots, 
+                 p.Typ 
         FROM admin_parking ap
         JOIN parking p ON ap.ID_Parkingu = p.ID_Parkingu
         WHERE ap.ID_Administratora = ?
