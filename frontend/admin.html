@@ -6,6 +6,7 @@
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/admin.css" />
     <script src="js/admin.js"></script>
+    <link rel="icon" type="image/png" href="../img/admin.png" />
   </head>
   <body>
     <div class="container">
@@ -24,11 +25,10 @@
         </form>
       </div>
 
-      <button id="logoutButton" style="display: none" class="logout-btn">
-        Log Out
-      </button>
-
       <div class="tabs">
+        <button id="logoutButton" style="display: none" class="logout-btn">
+          Log Out
+        </button>
         <button class="tab-button active" data-tab="dashboard">
           Dashboard
         </button>
@@ -52,7 +52,7 @@
           <input type="hidden" id="editParkingId" name="id" />
           <label for="editParkingName">Name:</label>
           <input type="text" id="editParkingName" name="name" required />
-
+          <br /><br />
           <label for="editParkingLocation">Location:</label>
           <input
             type="text"
@@ -60,15 +60,21 @@
             name="location"
             required
           />
-
+          <br /><br />
           <label for="editParkingType">Type:</label>
           <select id="editParkingType" name="type" required>
             <option value="zamkniety">Zamknięty</option>
             <option value="otwarty">Otwarty</option>
           </select>
-
-          <button type="submit">Save Changes</button>
-          <button type="button" id="closeEditParkingForm">Cancel</button>
+          <br />
+          <button type="submit" class="button-neutral">Save Changes</button>
+          <button
+            type="button"
+            id="closeEditParkingForm"
+            class="button-neutral"
+          >
+            Cancel
+          </button>
         </form>
       </div>
 
@@ -84,7 +90,7 @@
             step="1.00"
             required
           />
-
+          <br /><br />
           <label for="editDailyRate">Daily Rate:</label>
           <input
             type="number"
@@ -93,7 +99,7 @@
             step="1.00"
             required
           />
-
+          <br /><br />
           <label for="editMonthlyRate">Monthly Rate:</label>
           <input
             type="number"
@@ -102,9 +108,15 @@
             step="1.00"
             required
           />
-
-          <button type="submit">Save Pricing</button>
-          <button type="button" id="closeEditPricingForm">Cancel</button>
+          <br /><br />
+          <button type="submit" class="button-neutral">Save Pricing</button>
+          <button
+            type="button"
+            id="closeEditPricingForm"
+            class="button-neutral"
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </div>

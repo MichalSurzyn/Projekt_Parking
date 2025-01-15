@@ -7,6 +7,49 @@ body {
   background-color: #f4f4f9;
   color: #333;
 }
+span {
+  content: '\0021';
+}
+.report-button {
+  background-color: #ffffff; /* Jasnoszary kolor tła */
+  color: #000000; /* Neutralny kolor tekstu */
+  border: 1px solid #ff0000; /* Delikatny obrys */
+  border-radius: 6px; /* Zaokrąglone rogi */
+  padding: 3px 6px; /* Wygodne marginesy wewnętrzne */
+  font-size: 12px; /* Czytelna wielkość tekstu */
+  font-weight: bold;
+  cursor: pointer; /* Wskaźnik kursora */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Płynne efekty */
+  margin-left: 20px;
+}
+
+.button-neutral {
+  background-color: #f5f5f5; /* Jasnoszary kolor tła */
+  color: #333; /* Neutralny kolor tekstu */
+  border: 1px solid #ccc; /* Delikatny obrys */
+  border-radius: 6px; /* Zaokrąglone rogi */
+  padding: 10px 20px; /* Wygodne marginesy wewnętrzne */
+  font-size: 16px; /* Czytelna wielkość tekstu */
+  cursor: pointer; /* Wskaźnik kursora */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Płynne efekty */
+}
+.a {
+  margin-top: 10px;
+}
+.button-neutral:hover {
+  background-color: #e0e0e0; /* Jaśniejsze tło na hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtelny cień */
+}
+
+.button-neutral:active {
+  background-color: #d6d6d6; /* Jeszcze ciemniejsze tło przy kliknięciu */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Zmniejszony cień */
+}
+
+.button-neutral:focus {
+  outline: none; /* Usunięcie domyślnego obrysu */
+  box-shadow: 0 0 0 3px rgba(100, 150, 250, 0.5); /* Subtelna obwódka dla focus */
+}
 
 header {
   background: #333;
@@ -53,7 +96,7 @@ main {
 
 #parking-list li:hover {
   background: #e0e0e0; /* Zmień tło na jaśniejsze przy hover */
-  transform: scale(1.02); /* Dodaj delikatne powiększenie przy hover */
+  transform: scale(0.99); /* Dodaj delikatne powiększenie przy hover */
 }
 
 /* Modal styles */
@@ -105,6 +148,47 @@ main {
   cursor: pointer;
 }
 
+input[type='text'],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type='password'],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type='submit'] {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type='submit']:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
 .modal-content form button.close-modal {
   background: #888;
 }
@@ -117,6 +201,7 @@ main {
 
 /* Profile and Reservations styles */
 #vehicleListContainer,
+#vehicleFormContainer,
 #reservationListContainer,
 #userProfileContainer,
 #changePasswordContainer {
@@ -130,6 +215,7 @@ main {
 }
 
 #vehicleListContainer h2,
+#vehicleFormContainer,
 #reservationListContainer h2,
 #userProfileContainer h2,
 #changePasswordContainer h2 {
@@ -143,22 +229,43 @@ main {
   padding: 1em;
   border: 1px solid #ddd;
   border-radius: 5px; */
-
+  list-style: none;
   background: #f4f4f4;
   margin: 0.5em 0;
   padding: 1em;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+#vehicle-list,
+#vehicle-list div {
+  background-color: #f2f2f2 !important;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#vehicle-list div {
+  width: 33.33%;
+  display: inline-block;
+}
 
+#vehicleList li {
+  margin-left: -40px;
+}
+.button-delete {
+  background-color: #f5f5f5; /* Jasnoszary kolor tła */
+  color: #333; /* Neutralny kolor tekstu */
+  border: 1px solid #ccc; /* Delikatny obrys */
+  border-radius: 6px; /* Zaokrąglone rogi */
+  padding: 5px 10px; /* Wygodne marginesy wewnętrzne */
+  font-size: 12px; /* Czytelna wielkość tekstu */
+  cursor: pointer; /* Wskaźnik kursora */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Płynne efekty */
+  margin-left: 20px;
+}
+/*
 #vehicleFormContainer,
 #reservationFormContainer {
-  /* background: #fff;
-  padding: 1em;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 30%;
-  margin-left: 35%; */
   background: #fff;
   padding: 2em;
   border-radius: 5px;
@@ -201,7 +308,7 @@ main {
 #reservationFormContainer form button:hover {
   background: #555;
 }
-
+*/
 /* Payment styles */
 #payment-container {
   background: #fff;

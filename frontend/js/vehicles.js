@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li')
             li.textContent = `${vehicle.Marka} ${vehicle.Model} (${vehicle.Nr_Rejestracyjny})`
             const deleteButton = document.createElement('button')
-            deleteButton.textContent = 'Usuń'
+            deleteButton.classList.add('button-delete')
+            deleteButton.textContent = 'Delete'
             deleteButton.addEventListener('click', () => {
               deleteVehicle(vehicle.ID_Pojazdu)
             })

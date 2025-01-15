@@ -52,7 +52,7 @@ function fetchAndDisplayParkings(cityId = '', location = '') {
 
           // Dodaj przycisk zgłaszania problemów
           const reportButton = document.createElement('button')
-          reportButton.textContent = '!'
+          reportButton.textContent = 'Report'
           reportButton.classList.add('report-button')
           reportButton.addEventListener('click', (event) => {
             event.stopPropagation() // Zatrzymaj propagację kliknięcia

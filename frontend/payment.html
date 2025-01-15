@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" type="image/png" href="../img/car.png" />
   </head>
   <body>
     <header>
       <h1>Payment</h1>
       <nav>
-        <a href="index.html">Home</a>
+        <button onclick="location.href='index.html'">Home</button>
       </nav>
     </header>
     <main>
@@ -41,8 +42,7 @@
               .then((data) => {
                 if (data.success) {
                   alert('Payment confirmed!')
-                  //window.location.href = 'index.html'
-                  redirectTo('index.html')
+                  window.location.href = 'index.html'
                 } else {
                   alert('Payment failed: ' + data.message)
                 }
@@ -79,8 +79,7 @@
             .then((data) => {
               if (data.success) {
                 alert('Reservation cancelled due to non-payment.')
-                //window.location.href = 'index.html'
-                redirectTo('index.html')
+                window.location.href = 'index.html'
               } else {
                 console.error('Error cancelling reservation:', data.message)
               }

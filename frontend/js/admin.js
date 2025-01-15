@@ -93,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Capacity:</strong> ${parking.Liczba_Miejsc}</p>
         <p><strong>Available spots:</strong> ${parking.AvailableSpots}</p>
         <p><strong>Type:</strong> ${parking.Typ}</p>
-        <button class="edit-parking-btn" data-id="${parking.ID_Parkingu}" 
+        <button class="edit-parking-btn button-neutral" data-id="${
+          parking.ID_Parkingu
+        }" 
                 data-name="${parking.Nazwa}" 
                 data-location="${parking.Lokalizacja}" 
                 data-type="${parking.Typ}">
@@ -109,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
               )
               .join('')}
             <button
-                class="edit-pricing-btn"
+                class="edit-pricing-btn button-neutral"
                 data-id="${parking.ID_Parkingu}" 
                 data-hourly="${
                   parking.cennik.find((c) => c.Typ_Ceny === 'Za godzinę')
@@ -198,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>User Email:</strong> ${problem.Email}</p>
             <p><strong>Description:</strong> ${problem.Opis_Problemu}</p>
             <p class="report-date"><strong>Date:</strong> ${problem.Data_Zgloszenia}</p>
-            <button class="complete-report-btn" data-id="${problem.ID_Zgloszenia}">Close Report</button>
+            <button class="complete-report-btn button-neutral" data-id="${problem.ID_Zgloszenia}">Close Report</button>
           `
           problemReportsList.appendChild(li)
         })

@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parking System</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" type="image/png" href="../img/car.png" />
   </head>
   <body>
     <header>
       <h1>Parking System</h1>
       <nav>
-        <a href="#" id="login-link">Login</a>
-        <a href="#" id="register-link">Register</a>
+        <button href="#" id="login-link">Login</button>
+        <button href="#" id="register-link">Register</button>
         <button onclick="location.href='admin.html'">Go to Admin Page</button>
         <button id="reservations-link">Your Reservations</button>
         <button id="user-profile-link">Your Profile</button>
@@ -93,7 +94,7 @@
       <section id="reservation-modal" class="modal hidden">
         <div class="modal-content">
           <h2>Make a Reservation</h2>
-          <p id="reservation-parking-name"></p>
+          <strong><p id="reservation-parking-name"></p></strong>
           <p id="reservation-parking-pricing"></p>
           <form id="reservation-form" method="POST">
             <input
@@ -102,10 +103,10 @@
               name="parking_id"
             />
 
-            <label>Vehicle:</label>
+            <strong>Vehicle:</strong>
             <div id="vehicle-list"></div>
 
-            <label for="reservation-date-end">End Date:</label>
+            <strong for="reservation-date-end">End Date:</strong>
             <input
               type="datetime-local"
               id="reservation-date-end"
@@ -113,7 +114,7 @@
               required
             />
 
-            <label>Price Type:</label>
+            <strong>Price Type:</strong>
             <div>
               <input
                 type="radio"
@@ -139,7 +140,7 @@
               <label for="price-monthly">Monthly</label>
             </div>
 
-            <p id="calculated-price">Price:</p>
+            <strong><p id="calculated-price">Price:</p></strong>
 
             <button type="submit">Reserve</button>
             <button type="button" class="close-modal">Close</button>
@@ -167,7 +168,7 @@
       </section>
 
       <!-- User Profile Modal -->
-      <section id="profile-modal" class="modal hidden">
+      <!--<section id="profile-modal" class="modal hidden">
         <div class="modal-content">
           <h2>Your Vehicles</h2>
           <div id="vehicleListContainer">
@@ -200,7 +201,7 @@
           </div>
           <button type="button" class="close-modal">Close</button>
         </div>
-      </section>
+      </section>-->
     </main>
 
     <script src="js/auth.js"></script>
