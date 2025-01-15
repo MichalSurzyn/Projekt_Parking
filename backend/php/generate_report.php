@@ -38,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Type: text/csv');
         header("Content-Disposition: attachment; filename={$filename}");
 
-        fputcsv($file, [
-            'ID_Rezerwacji', 'ID_Uzytkownika', 'ID_Parkingu', 'ID_Pojazdu', 
-            'Data_Rezerwacji', 'Data_Wygasniecia', 'Cena', 'Status', 
-            'Data_Modyfikacji', 'Typ_Ceny'
-        ]);
+        // fputcsv($file, [
+        //     'ID_Rezerwacji', 'ID_Uzytkownika', 'ID_Parkingu', 'ID_Pojazdu', 
+        //     'Data_Rezerwacji', 'Data_Wygasniecia', 'Cena', 'Status', 
+        //     'Data_Modyfikacji', 'Typ_Ceny'
+        // ]);
 
-        foreach ($reservations as $row) {
-            fputcsv($file, $row);
-        }
+        // foreach ($reservations as $row) {
+        //     fputcsv($file, $row);
+        // }
 
         fputcsv($file, []); // Empty line
         fputcsv($file, ['Total Price', $totalPrice]);
