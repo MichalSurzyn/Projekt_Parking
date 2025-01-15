@@ -325,4 +325,48 @@ document.addEventListener('DOMContentLoaded', () => {
       content.style.display = content.id === tabName ? 'grid' : 'none'
     })
   }
+
+  document
+    .getElementById('generateReportButton')
+    .addEventListener('click', function () {
+      document.getElementById('reportForm').style.display = 'block'
+    })
+
+  document
+    .getElementById('reportFormElement')
+    .addEventListener('submit', async function (event) {
+      event.preventDefault()
+      const startDate = document.getElementById('startDate').value
+      const endDate = document.getElementById('endDate').value
+
+      if (new Date(startDate) > new Date(endDate)) {
+        alert('Start Date cannot be later than End Date.')
+        return
+      }
+
+      try {
+        const response = await fetch('../backend/php/generate_report.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ startDate, endDate }),
+        })
+
+        if (!response.ok) throw new Error('Error generating report')
+
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        a.download = `report_${startDate}_to_${endDate}.csv`
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        alert('Report generated successfully!')
+      } catch (error) {
+        alert('Failed to generate report: ' + error.message)
+      }
+    })
 })

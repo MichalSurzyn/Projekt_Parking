@@ -35,6 +35,20 @@
         <button class="tab-button" data-tab="problemReports">
           Problem Reports
         </button>
+
+        <button data-tab="generateReport" id="generateReportButton">
+          Generate Report
+        </button>
+      </div>
+
+      <div id="reportForm" style="display: none; margin-top: 20px">
+        <form id="reportFormElement">
+          <label for="startDate">Start Date:</label>
+          <input type="date" id="startDate" name="startDate" required />
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate" required />
+          <button type="submit">Generate</button>
+        </form>
       </div>
 
       <div id="dashboard" class="tab-content dashboard"></div>
